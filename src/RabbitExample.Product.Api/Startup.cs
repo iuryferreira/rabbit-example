@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
-namespace RabbitExample.Store.Api
+namespace RabbitExample.Product.Api
 {
     public class Startup
     {
@@ -22,7 +22,7 @@ namespace RabbitExample.Store.Api
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new() { Title = "RabbitExample.Store.Api", Version = "v1" });
+                c.SwaggerDoc("v1", new() { Title = "RabbitExample.Product.Api", Version = "v1" });
             });
         }
 
