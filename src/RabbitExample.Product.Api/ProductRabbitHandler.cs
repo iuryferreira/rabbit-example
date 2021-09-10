@@ -13,14 +13,9 @@ namespace RabbitExample.Product.Api
     {
         private IBus _bus;
 
-        public ProductRabbitHandler(IBus bus)
-        {
-            _bus = bus;
-        }
-
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _bus = RabbitHutch.CreateBus("localhost:5672");
+            _bus = RabbitHutch.CreateBus("host=localhost:5672");
             _bus.Rpc.RespondAsync<GetProductRequest, GetProductResponse>(GetProduct, stoppingToken);
             return Task.CompletedTask;
         }

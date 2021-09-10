@@ -5,7 +5,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="EasyNetQ" Version="6.3.1" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\RabbitExample.Shared\RabbitExample.Shared.csproj" />
     </ItemGroup>
 
 </Project>

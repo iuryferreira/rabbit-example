@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EasyNetQ;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RabbitExample.Shared.Requests;
+using RabbitExample.Shared.Responses;
 
 namespace RabbitExample.Store.Api.Controllers
 {
@@ -11,22 +14,21 @@ namespace RabbitExample.Store.Api.Controllers
     [Route("[controller]")]
     public class PurchasesController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<PurchasesController> _logger;
+        private IBus _bus;
 
         public PurchasesController(ILogger<PurchasesController> logger)
         {
             _logger = logger;
         }
 
-        [HttpPost]
-        public IActionResult Store()
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> StoreAsync(int id)
         {
-            return Ok();
+            _bus = RabbitHutch.CreateBus("host=localhost:5672");
+            var obj = new GetProductRequest { Id = id };
+            var result = await _bus.Rpc.RequestAsync<GetProductRequest, GetProductResponse>(obj);
+            return Ok(result);
         }
     }
 }
